@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
   Link,
   IconButton,
   Grid,
-  TextField,
+  Modal,
   Button,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import {
   FaFacebookF,
   FaInstagram,
@@ -18,323 +17,195 @@ import {
   FaLinkedinIn,
   FaTelegramPlane,
 } from "react-icons/fa";
-import logo from "../assets/fitness1.png"; // Replace with your logo
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import logo from "../assets/fitness1.png";
 import GoogleTranslate from "./GoogleTranslate";
 import Subscribe from "./Subscribe";
+import Tracker from "./Tracker"; // Ensure Tracker component is imported
+
 const Footer = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://www.chatbase.co/embed.min.js";
+    script.defer = true;
+    script.setAttribute("chatbotId", "3CQjUebCFQdRORiKuycVw");
+    script.setAttribute("domain", "www.chatbase.co");
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   return (
     <Box
       component="footer"
       sx={{
-        backgroundColor: "#000",
-        color: "white",
-        padding: { xs: "20px 10px", sm: "30px 20px", md: "40px 20px" }, // Responsive padding
+        backgroundColor: "#1c1c1e",
+        color: "#e0e0e0",
+        padding: { xs: "20px 10px", sm: "30px 20px", md: "40px 20px" },
         fontFamily: "'Helvetica Neue', sans-serif",
       }}
     >
-      <Grid
-        container
-        spacing={3}
-        justifyContent={{ xs: "center", sm: "space-between" }} // Center content for mobile screens
-        alignItems={{ xs: "center", sm: "normal" }} // Normal content for PC screens
-        direction={{ xs: "column", sm: "row" }} // Stack items on mobile
-      >
-        {/* Column 1: About */}
-        <Grid item xs={12} sm={6} md={2}>
-          <Typography
-            variant="h6"
-            gutterBottom
-            sx={{
-              fontWeight: "bold",
-              fontSize: { xs: "1rem", md: "1.2rem" }, // Responsive font size
-              textAlign: { xs: "center", sm: "left" }, // Center text on mobile
-            }}
-          >
-            About
-          </Typography>
-          <Box sx={{ textAlign: { xs: "center", sm: "left" } }}>
-  {[
-    { name: "Our Story", path: "/home" },
-    { name: "Team", path: "/about" },
-    { name: "Career", path: "/servies" },
-    { name: "Content", path: "/Blog" },
-    { name: "Press", path: "#" },
-  ].map((item, index) => (
-    <Link
-      key={index}
-      href={item.path} 
-      color="grey.400"
-      display="block"
-      gutterBottom
-      sx={{
-        textDecoration: "none",
-        fontSize: { xs: "0.8rem", sm: "0.9rem" },
-        "&:hover": { color: "#fff" },
-      }}
-    >
-      {item.name}  {/* Use item.name for display */}
-    </Link>
-  ))}
-</Box>
-
-        </Grid>
-
-        {/* Column 2: Services */}
-        <Grid item xs={12} sm={6} md={2}>
-          <Typography
-            variant="h6"
-            gutterBottom
-            sx={{
-              fontWeight: "bold",
-              fontSize: { xs: "1rem", md: "1.2rem" },
-              textAlign: { xs: "center", sm: "left" },
-            }}
-          >
-            Services
-          </Typography>
-          <Box sx={{ textAlign: { xs: "center", sm: "left" } }}>
-  {["Personal Coachings", "Group Classes", "Online Programs", "Corporate Wellness"].map((item, index) => (
-    <Link
-      key={index}
-      href="/services"  // All links point to /services
-      color="grey.400"
-      display="block"
-      gutterBottom
-      sx={{
-        textDecoration: "none",
-        fontSize: { xs: "0.8rem", sm: "0.9rem" },
-        "&:hover": { color: "#fff" },
-      }}
-    >
-      {item}
-    </Link>
-  ))}
-</Box>
-
-        </Grid>
-
-        {/* Column 3: Resources */}
-        <Grid item xs={12} sm={6} md={2}>
-          <Typography
-            variant="h6"
-            gutterBottom
-            sx={{
-              fontWeight: "bold",
-              fontSize: { xs: "1rem", md: "1.2rem" },
-              textAlign: { xs: "center", sm: "left" },
-            }}
-          >
-            Resources
+      <Grid container spacing={3} justifyContent="space-between">
+        {/* Column 1: Logo and Description */}
+        <Grid item xs={12} sm={6} md={4}>
+          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+            <img src={logo} alt="Logo" style={{ width: 50, height: 50, marginRight: 10 }} />
+            <Typography variant="h6" component="h1" sx={{ fontWeight: "bold" }}>
+              FitLife
             </Typography>
-<Box sx={{ textAlign: { xs: "center", sm: "left" } }}>
-  {[
-    { name: "Academy", path: "/about" },  // Link to Resources section
-    { name: "Blog", path: "/Blog" },     // Link to Resources section
-    { name: "Health Tips", path: "/healthtips" }, // Link to HealthTips
-    { name: "FAQs", path: "/#faq" },           // Link to FAQs section
-    { name: "Support", path: "/#resources" },   // Link to Resources section
-  ].map((item, index) => (
-    <Link
-      key={index}
-      href={item.path}  // Update to use item.path
-      smooth={true}
-      color="grey.400"
-      display="block"
-      gutterBottom
-      sx={{
-        textDecoration: "none",
-        fontSize: { xs: "0.8rem", sm: "0.9rem" },
-        "&:hover": { color: "#fff" },
-      }}
-    >
-      {item.name}
-    </Link>
-  ))}
-</Box>
-        </Grid>
-
-        {/* Column 4: Company */}
-        <Grid item xs={12} sm={6} md={2}>
-          <Typography
-            variant="h6"
-            gutterBottom
-            sx={{
-              fontWeight: "bold",
-              fontSize: { xs: "1rem", md: "1.2rem" },
-              textAlign: { xs: "center", sm: "left" },
-            }}
-          >
-            Company
-          </Typography>
-          <Box sx={{ textAlign: { xs: "center", sm: "left" } }}>
-  {[
-    { name: "About Us", path: "/about" }, 
-    { name: "Careers", path: "#" }, 
-    { name: "Teams", path: "#" },
-    { name: "Contact Us", path: "/contact" },
-    { name: "Privacy Policy",path:"/privacy-policy"}
-  ].map((item, index) => (
-    <Link
-      key={index}
-      href={item.path}
-      color="grey.400"
-      display="block"
-      gutterBottom
-      sx={{
-        textDecoration: "none",
-        fontSize: { xs: "0.8rem", sm: "0.9rem" },
-        "&:hover": { color: "#fff" },
-      }}
-    >
-      {item.name}  
-    </Link>
-              )
-            )}
-            <RouterLink to="privacy-policy" style={{ textDecoration: "none" }}>
-              <Link
-                key={5}
-                color="grey.400"
-                display="block"
-                gutterBottom
-                sx={{
-                  textDecoration: "none",
-                  fontSize: { xs: "0.8rem", sm: "0.9rem" },
-                  "&:hover": { color: "#fff" },
-                }}
-              >
-                Privacy Policy
-              </Link>
-            </RouterLink>
-            <RouterLink to="/terms-of-use" style={{ textDecoration: "none" }}>
-  <Link
-    key={1} // Change the key as necessary
-    color="grey.400"
-    display="block"
-    gutterBottom
-    sx={{
-      textDecoration: "none",
-      fontSize: { xs: "0.8rem", sm: "0.9rem" }, // Responsive font size
-      "&:hover": { color: "#fff" }, // Change color on hover
-    }}
-  >
-    Terms of Use
-  </Link>
-</RouterLink>
-
           </Box>
-        </Grid>
-
-        {/* Newsletter Subscription */}
-        <Grid item xs={12} sm={12} md={4} sx={{ textAlign: "center" }}>
-          {/* Subscribe Newsletter */}
-          <Subscribe />
-          <Box
-            className="translator"
-            sx={{
-              position: "relative",
-              marginLeft: "10px",
-              marginRight: "0",
-              marginBottom: "0px",
-              marginTop: "50px",
-              color: "white",
-              display: "block",
-              alignItems: "center",
-              width: "fit-content",
-            }}
-          >
-            <GoogleTranslate />
-          </Box>
-          <Typography
-            variant="h6"
-            gutterBottom
-            sx={{
-              fontWeight: "bold",
-              fontSize: { xs: "1rem", md: "1.2rem" },
-            }}
-          >
+          <Typography variant="body2" sx={{ color: "grey.400", textAlign: "center" }}>
+            Your companion for a healthy lifestyle. Track your fitness, stay motivated, and be your best self with FitLife.
           </Typography>
         </Grid>
+
+        {/* Dynamic Links */}
+        {[
+          { title: "About", links: ["Our Story", "Team", "Career", "Content", "Press"], paths: ["/home", "/about", "/services", "/blog", "#"] },
+          { title: "Services", links: ["Personal Coaching", "Group Classes", "Online Programs", "Corporate Wellness"], paths: ["/services"] },
+          { title: "Resources", links: ["Academy", "Blog", "Health Tips", "FAQs", "Support"], paths: ["/about", "/blog", "/healthtips", "#faq", "#resources"] },
+          { title: "Company", links: ["About Us", "Careers", "Teams", "Contact Us", "Privacy Policy", "Terms of Use"], paths: ["/about", "#", "#", "/contact", "/privacy-policy", "/terms-of-use"] },
+        ].map((section, index) => (
+          <Grid item xs={12} md={2} key={index}>
+            <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", textAlign: "center" }}>
+              {section.title}
+            </Typography>
+            <Box sx={{ textAlign: "center" }}>
+              {section.links.map((link, idx) => (
+                <Link
+                  key={idx}
+                  component={RouterLink}
+                  to={section.paths[idx]}
+                  color="grey.400"
+                  display="block"
+                  sx={{
+                    textDecoration: "none",
+                    fontSize: "0.9rem",
+                    "&:hover": { color: "#fff" },
+                  }}
+                >
+                  {link}
+                </Link>
+              ))}
+            </Box>
+          </Grid>
+        ))}
       </Grid>
+
+      {/* Newsletter Subscription */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          mt: 4,
+        }}
+      >
+        <Subscribe />
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleOpen}
+          sx={{ fontWeight: "bold", mt: 2 }}
+        >
+          Open Tracker
+        </Button>
+      </Box>
 
       {/* Social Media Icons */}
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
-          marginTop: "40px",
-          marginBottom:"40px"
+          mt: 4,
+          mb: 4,
         }}
       >
         {[
-          FaFacebookF,
-          FaTelegramPlane,
-          FaLinkedinIn,
-          FaInstagram,
-          FaYoutube,
-          faXTwitter,
-        ].map((Icon, index) => (
+          { Icon: FaFacebookF, url: "https://www.facebook.com" },
+          { Icon: FaTelegramPlane, url: "https://web.telegram.org" },
+          { Icon: FaLinkedinIn, url: "https://www.linkedin.com" },
+          { Icon: FaInstagram, url: "https://www.instagram.com" },
+          { Icon: FaYoutube, url: "https://www.youtube.com" },
+          { Icon: faTwitter, url: "https://twitter.com" },
+        ].map(({ Icon, url }, index) => (
           <IconButton
             key={index}
-            href="#"
-            color="inherit"
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
             sx={{
-              fontSize: { xs: "1.3rem", sm: "1.5rem", md: "1.8rem" },
-              mx: { xs: 0.5, sm: 1 },
+              fontSize: "1.5rem",
+              mx: 1,
               color: "grey.500",
               "&:hover": { color: "#fff" },
             }}
           >
-            {index === 5 ? (
-              <FontAwesomeIcon icon={Icon} />
-            ) : (
-              <Icon fontSize="inherit" />
-            )}
+            <FontAwesomeIcon icon={Icon} />
           </IconButton>
         ))}
       </Box>
 
-      {/* Bottom Links */}
-      <Box
-        sx={{
-          marginTop: { xs: "15px", sm: "20px" },
-          textAlign: "center",
-          fontSize: { xs: "0.7rem", sm: "0.8rem" },
-          color: "grey.500",
-        }}
-      >
+      {/* Footer Bottom */}
+      <Box sx={{ textAlign: "center", mt: 2, mb: 2 }}>
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
             flexWrap: "wrap",
-            gap: { xs: "10px", sm: "20px" },
-            marginBottom: "10px",
+            gap: "20px",
+            mb: 2,
           }}
         >
-          {[
-            "Privacy Policy",
-            "Terms of Use",
-            "Sales and Refunds",
-            "Legal",
-            "Site Map",
-          ].map((item, index) => (
+          {["Privacy Policy", "Terms of Use", "Sales and Refunds", "Legal", "Site Map"].map((item, index) => (
             <Link
               key={index}
               href="#"
               color="grey.400"
-              sx={{
-                textDecoration: "none",
-                "&:hover": { color: "#fff" },
-              }}
+              sx={{ textDecoration: "none", "&:hover": { color: "#fff" } }}
             >
               {item}
             </Link>
           ))}
         </Box>
-        <Typography variant="body2" sx={{ color: "grey.500" }}>
-          &copy; 2024 All Rights Reserved
+        <Typography variant="body2" color="grey.500">
+          &copy; {new Date().getFullYear()} All Rights Reserved
         </Typography>
       </Box>
+
+      {/* Modal for Tracker */}
+      <Modal open={open} onClose={handleClose} aria-labelledby="tracker-modal-title">
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: { xs: "80%", sm: "60%", md: "40%" },
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+            outline: "none",
+          }}
+        >
+          <Typography id="tracker-modal-title" variant="h6" gutterBottom>
+            Calorie Tracker
+          </Typography>
+          <Tracker />
+          <Button onClick={handleClose} sx={{ mt: 2 }} color="secondary" variant="outlined">
+            Close
+          </Button>
+        </Box>
+      </Modal>
     </Box>
   );
 };
